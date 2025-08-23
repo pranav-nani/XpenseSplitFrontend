@@ -50,7 +50,7 @@
   background: none;
   border: none;
   font-weight: bold;
-  color: #000000;
+  color: rgb(94, 0, 157);
   cursor: pointer;
   font-size: 16px;
   padding: 8px 0;
@@ -61,7 +61,7 @@
 }
 
 .back-btn:hover {
-  color: #ffffff;
+  color: rgba(193, 100, 255, 0.893)
 }
 
 /* Empty State */
@@ -436,7 +436,7 @@
   background: white;
   padding: 24px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(136, 0, 255, 0.166);
   cursor: pointer;
   transition: all 0.2s ease;
   border: 2px solid transparent;
@@ -689,7 +689,7 @@
 
 .group-header h1 {
   font-size: 32px;
-  color: white;
+  color: var(--clr-text-primary);
   margin: 8px 0 12px 0;
   font-weight: 700;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -698,7 +698,7 @@
 }
 
 .group-header div {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(118, 75, 162,0.6);
   font-size: 15px;
   font-weight: 500;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
