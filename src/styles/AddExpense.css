@@ -1,0 +1,313 @@
+/* AddExpense.css */
+
+.add-expense-page {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.15),
+    0 15px 35px rgba(0, 0, 0, 0.1),
+    0 5px 15px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  min-height: 600px;
+  position: relative;
+  animation: fadeIn 0.3s ease-in;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.add-expense-page-active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.add-expense-container {
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.add-expense-modal-content {
+  background: transparent;
+    box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.15),
+    0 15px 35px rgba(0, 0, 0, 0.1),
+    0 5px 15px rgba(0, 0, 0, 0.08);
+  border-radius: 0;
+  padding: 40px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: none;
+  position: static;
+}
+
+.add-expense-modal-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.add-expense-modal-header h2 {
+  color: #333;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.add-expense-modal-header-subtitle {
+  color: #666;
+  font-size: 14px;
+}
+
+.add-expense-form-group {
+  margin-bottom: 24px;
+}
+
+.add-expense-form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.add-expense-form-group input[type="text"],
+.add-expense-form-group input[type="number"] {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.add-expense-form-group input[type="text"]:focus,
+.add-expense-form-group input[type="number"]:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 
+    0 0 0 3px rgba(102, 126, 234, 0.1),
+    0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.add-expense-user-selection-container {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 8px;
+  border: 1px solid #e9ecef;
+  box-shadow: 
+    inset 0 1px 3px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.add-expense-user-selection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.add-expense-user-checkbox-container {
+  margin-bottom: 8px;
+}
+
+.add-expense-user-checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 12px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+  background: white;
+  border: 1px solid #e9ecef;
+  margin-bottom: 4px;
+}
+
+.add-expense-user-checkbox-label:hover {
+  background-color: #f1f3f4;
+  border-color: #667eea;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+}
+
+.add-expense-user-checkbox-label:has(input:checked) {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: #667eea;
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.add-expense-user-checkbox-label:has(input:disabled) {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+  color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.add-expense-user-checkbox-label:has(input:disabled):hover {
+  transform: none;
+  box-shadow: none;
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+}
+
+/* Custom checkbox styling */
+.add-expense-user-checkbox-label input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #dee2e6;
+  border-radius: 4px;
+  margin-right: 12px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: white;
+  flex-shrink: 0;
+}
+
+.add-expense-user-checkbox-label input[type="checkbox"]:hover {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.add-expense-user-checkbox-label input[type="checkbox"]:checked {
+  background: white;
+  border-color: white;
+}
+
+.add-expense-user-checkbox-label input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  width: 6px;
+  height: 10px;
+  border: solid #667eea;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.add-expense-user-checkbox-label input[type="checkbox"]:disabled {
+  border-color: #dee2e6;
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+}
+
+.add-expense-user-checkbox-label input[type="checkbox"]:disabled:hover {
+  box-shadow: none;
+  border-color: #dee2e6;
+}
+
+.add-expense-user-checkbox-label span {
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+}
+
+.add-expense-select-all-btn {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.add-expense-select-all-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.add-expense-select-all-btn.add-expense-clear-all {
+  background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
+}
+
+.add-expense-select-all-btn.add-expense-clear-all:hover {
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.add-expense-selection-count {
+  font-size: 13px;
+  color: #6c757d;
+  font-weight: 600;
+  background: rgba(108, 117, 125, 0.1);
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.add-expense-action-buttons {
+  margin-top: 30px;
+  display: flex;
+  gap: 12px;
+}
+
+.add-expense-btn-full-width {
+  flex: 1;
+}
+
+.add-expense-btn-1 {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-expense-btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 
+    0 4px 15px rgba(102, 126, 234, 0.3),
+    0 2px 8px rgba(102, 126, 234, 0.2);
+}
+
+.add-expense-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(102, 126, 234, 0.4),
+    0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.add-expense-btn-primary:active {
+  transform: translateY(0px);
+  box-shadow: 
+    0 2px 8px rgba(102, 126, 234, 0.3),
+    0 1px 4px rgba(102, 126, 234, 0.2);
+}
+  
+.add-expense-user-selection-list {
+  max-height: 250px; /* adjust height as needed */
+  overflow-y: auto;
+  border: 1px solid #ddd; /* optional for visual separation */
+  padding: 8px; /* optional for spacing */
+  border-radius: 4px; /* optional for aesthetics */
+}
