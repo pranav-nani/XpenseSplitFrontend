@@ -21,9 +21,33 @@ const ExpenseChart = () => {
 
   useEffect(() => {
     const fetchExpenses = async () => {
-      const username = localStorage.getItem("user")?.split("_")[0];
+      const storedUser = localStorage.getItem("user");
+      let username = null;
+
+      if (storedUser) {
+        try {
+          // Parse the JSON string from localStorage
+          const userObject = JSON.parse(storedUser);
+
+          // Check if the username property exists and is a string
+          if (userObject && typeof userObject.username === "string") {
+            username = userObject.username;
+
+            // Apply your split logic to the extracted username
+            // Example: if the username is "nani_reddy", this will get "nani"
+            username = username.split("_")[0];
+          }
+        } catch (error) {
+          // Fallback for cases where the stored value is not valid JSON
+          console.error("Failed to parse user data from localStorage:", error);
+          // In this case, you might want to handle it differently or set username to null
+          username = null;
+        }
+      }
       try {
-        const response = await fetch(`http://localhost:8080/api/expenses/${username}`);
+        const response = await fetch(
+          `http://localhost:8080/api/expenses/${username}`
+        );
         const expenses = await response.json();
 
         const categoryTotals = expenses.reduce((acc, expense) => {

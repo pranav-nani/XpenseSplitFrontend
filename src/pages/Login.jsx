@@ -30,7 +30,8 @@ const Login = () => {
       );
 
       toast.success(`Welcome back, ${response.data.firstname}!`);
-      localStorage.setItem("user", formData.username);
+      // CORRECTED: Store the entire user data object as a JSON string
+      localStorage.setItem("user", JSON.stringify(response.data)); 
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
@@ -89,7 +90,8 @@ const Login = () => {
                 background: "none",
                 border: "none",
                 cursor: "pointer",
-              }}>
+              }}
+            >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>

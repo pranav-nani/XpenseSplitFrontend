@@ -13,7 +13,7 @@
   --clr-background: var(--clr-coconut-a0);
   --clr-surface: var(--clr-coconut-a10);
   --clr-text: var(--clr-coconut-a40);
-  --clr-text-light: rgb(103, 103, 103);
+  --clr-text-light: rgba(103, 103, 103, 0.515);
   --clr-border: var(--clr-coconut-a20);
 
   /* Accent colors for gradients and highlights */

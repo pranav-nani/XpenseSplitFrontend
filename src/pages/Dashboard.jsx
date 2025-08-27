@@ -8,7 +8,29 @@ const Dashboard = () => {
   const [totalBalance, setTotalBalance] = useState(0);
   const [hasExpenses, setHasExpenses] = useState(false);
 
-  const username = localStorage.getItem("user")?.split("_")[0];
+  const storedUser = localStorage.getItem("user");
+  let username = null;
+
+  if (storedUser) {
+    try {
+      // Parse the JSON string from localStorage
+      const userObject = JSON.parse(storedUser);
+
+      // Check if the username property exists and is a string
+      if (userObject && typeof userObject.username === "string") {
+        username = userObject.username;
+
+        // Apply your split logic to the extracted username
+        // Example: if the username is "nani_reddy", this will get "nani"
+        username = username.split("_")[0];
+      }
+    } catch (error) {
+      // Fallback for cases where the stored value is not valid JSON
+      console.error("Failed to parse user data from localStorage:", error);
+      // In this case, you might want to handle it differently or set username to null
+      username = null;
+    }
+  }
 
   useEffect(() => {
     if (!username) return;
@@ -22,7 +44,11 @@ const Dashboard = () => {
         setYouAreOwed(data.youAreOwed);
 
         // If all are zero → no expenses yet
-        if (data.totalBalance === 0 && data.youOwe === 0 && data.youAreOwed === 0) {
+        if (
+          data.totalBalance === 0 &&
+          data.youOwe === 0 &&
+          data.youAreOwed === 0
+        ) {
           setHasExpenses(false);
         } else {
           setHasExpenses(true);
@@ -45,19 +71,27 @@ const Dashboard = () => {
           )}
         </div>
 
-        {(
+        {
           <>
             <div className="balance-cards">
-              <BalanceCard amount={`₹${totalBalance}`} label="Total Balance" type="total" />
+              <BalanceCard
+                amount={`₹${totalBalance}`}
+                label="Total Balance"
+                type="total"
+              />
               <BalanceCard amount={`₹${youOwe}`} label="You Owe" type="owe" />
-              <BalanceCard amount={`₹${youAreOwed}`} label="You Are Owed" type="owed" />
+              <BalanceCard
+                amount={`₹${youAreOwed}`}
+                label="You Are Owed"
+                type="owed"
+              />
             </div>
 
             <div className="dashboard-content">
-              <ExpenseChart /> 
+              <ExpenseChart />
             </div>
           </>
-        )}
+        }
       </div>
     </>
   );

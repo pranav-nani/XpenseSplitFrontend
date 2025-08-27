@@ -11,8 +11,21 @@ const AddExpense = () => {
   const [suggestedCategory, setSuggestedCategory] = useState("");
   const [showCategoryModal, setShowCategoryModal] = useState(false);
 
-  const username = localStorage.getItem("user")?.split("_")[0];
+  const storedUser = localStorage.getItem("user");
+  let username = null;
 
+  if (storedUser) {
+    try {
+      const userObject = JSON.parse(storedUser);
+      if (userObject && typeof userObject.username === "string") {
+        username = userObject.username;
+        username = username.split("_")[0];
+      }
+    } catch (error) {
+      console.error("Failed to parse user data from localStorage:", error);
+      username = null;
+    }
+  }
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/users/all")
