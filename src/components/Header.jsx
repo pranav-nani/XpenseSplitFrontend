@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png"; 
+import logo from "../assets/logo.png";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -25,6 +25,9 @@ const Header = () => {
         </NavLink>
         <NavLink to="/dashboard/group" className="nav-tab">
           Group Details
+        </NavLink>
+        <NavLink to="/dashboard/individual-expenses" className="nav-tab">
+          IndividualExpenses
         </NavLink>
         <NavLink to="/dashboard/add-expense" className="nav-tab">
           Add Expense

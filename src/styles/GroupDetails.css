@@ -61,7 +61,7 @@
 }
 
 .back-btn:hover {
-  color: rgba(193, 100, 255, 0.893)
+  color: rgba(193, 100, 255, 0.893);
 }
 
 /* Empty State */
@@ -698,7 +698,7 @@
 }
 
 .group-header div {
-  color: rgba(118, 75, 162,0.6);
+  color: rgba(118, 75, 162, 0.6);
   font-size: 14px;
   font-weight: 500;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
@@ -852,9 +852,35 @@
   background: #a8a8a8;
 }
 
+/* In GroupDetails.css */
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
 .member-status {
-  font-weight: 500;
-  color: #6c757d;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Green text for members who are owed money */
+.member-status.positive {
+  color: #198754; /* A nice, clear green */
+}
+
+/* Red text for members who owe money */
+.member-status.negative {
+  color: #dc3545; /* A standard, clear red */
+}
+
+/* Gray text for members who are settled up */
+.member-status.neutral {
+  color: #6c757d; /* A neutral gray */
+  font-weight: 400;
 }
 
 .action-buttons {

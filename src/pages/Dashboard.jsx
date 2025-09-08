@@ -13,21 +13,13 @@ const Dashboard = () => {
 
   if (storedUser) {
     try {
-      // Parse the JSON string from localStorage
       const userObject = JSON.parse(storedUser);
-
-      // Check if the username property exists and is a string
       if (userObject && typeof userObject.username === "string") {
         username = userObject.username;
-
-        // Apply your split logic to the extracted username
-        // Example: if the username is "nani_reddy", this will get "nani"
         username = username.split("_")[0];
       }
     } catch (error) {
-      // Fallback for cases where the stored value is not valid JSON
       console.error("Failed to parse user data from localStorage:", error);
-      // In this case, you might want to handle it differently or set username to null
       username = null;
     }
   }
@@ -38,12 +30,9 @@ const Dashboard = () => {
     fetch(`http://localhost:8080/api/expenses/balance/${username}`)
       .then((res) => res.json())
       .then((data) => {
-        // data is your BalanceDto → { totalBalance, youOwe, youAreOwed }
         setTotalBalance(data.totalBalance);
         setYouOwe(data.youOwe);
         setYouAreOwed(data.youAreOwed);
-
-        // If all are zero → no expenses yet
         if (
           data.totalBalance === 0 &&
           data.youOwe === 0 &&

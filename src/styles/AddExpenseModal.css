@@ -1,0 +1,339 @@
+/* Modal backdrop - covers entire viewport */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Modal content container */
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 40px;
+}
+
+/* Modal header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+  border-radius: 12px 12px 0 0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+  flex: 1;
+  padding-right: 16px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.close-btn:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+/* Form styling */
+form {
+  padding: 24px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Split info styling */
+.split-info {
+  margin: 8px 0 16px;
+  padding: 12px;
+  background-color: #f0f9ff;
+  border: 1px solid #0ea5e9;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  color: #0c4a6e;
+  line-height: 1.4;
+}
+
+/* User selection container */
+.user-selection-container {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.user-selection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.selection-count {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.select-all-btn-expense-modal {
+  background: none;
+  border: none;
+  color: #0d6efd;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.select-all-btn-expense-modal:hover {
+  background-color: #dbeafe;
+}
+
+.select-all-btn-expense-modal.clear-all-active {
+    color: #ef4444;
+}
+
+.select-all-btn-expense-modal.clear-all-active:hover {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+/* User selection list */
+.user-selection-list {
+  max-height: 200px;
+  overflow-y: auto;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.user-selection-list::-webkit-scrollbar {
+  display: none;
+}
+
+.user-checkbox-container {
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.user-checkbox-container:last-child {
+  border-bottom: none;
+}
+
+.user-checkbox-label {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.user-checkbox-label:hover {
+  background-color: #f9fafb;
+}
+
+.user-checkbox-label input[type="checkbox"] {
+  margin-right: 12px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.user-checkbox-label span {
+  font-size: 0.875rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+/* Action buttons */
+.action-buttons {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.btn {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 12px 24px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  display: inline-block;
+}
+
+.btn-primary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-full-width {
+  width: 100%;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .modal-backdrop {
+    padding: 10px;
+  }
+
+  .modal-content {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .modal-header {
+    padding: 16px 16px 12px;
+  }
+
+  .modal-header h2 {
+    font-size: 1.25rem;
+  }
+
+  form {
+    padding: 16px;
+  }
+
+  .user-selection-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .selection-count {
+    align-self: stretch;
+  }
+
+  .select-all-btn-expense-modal{
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-header h2 {
+    font-size: 1.125rem;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="number"] {
+    padding: 10px;
+  }
+}
+
+
+/* ===== AGGRESSIVE SCROLLBAR HIDING (Add this at the very end) ===== */
+/* Force hide all scrollbars with maximum specificity */
+.modal-backdrop,
+.modal-backdrop *,
+.modal-content,
+.modal-content *,
+.user-selection-list,
+.user-selection-list * {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.modal-backdrop::-webkit-scrollbar,
+.modal-backdrop *::-webkit-scrollbar,
+.modal-content::-webkit-scrollbar,
+.modal-content *::-webkit-scrollbar,
+.user-selection-list::-webkit-scrollbar,
+.user-selection-list *::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+/* Target all possible scrollbar parts */
+.modal-content::-webkit-scrollbar-track,
+.modal-content::-webkit-scrollbar-thumb,
+.modal-content::-webkit-scrollbar-corner,
+.user-selection-list::-webkit-scrollbar-track,
+.user-selection-list::-webkit-scrollbar-thumb,
+.user-selection-list::-webkit-scrollbar-corner {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}

@@ -50,14 +50,12 @@ const AddExpense = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Step 1: Call categorize API
     try {
       const res = await fetch("http://localhost:8080/api/expenses/categorize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ description }),
       });
-
       const categorySuggestion = await res.text();
       setSuggestedCategory(categorySuggestion);
       setShowCategoryModal(true);
@@ -66,10 +64,8 @@ const AddExpense = () => {
     }
   };
 
-  // FIX: only accept category, no event
   const saveExpense = async (finalCategory) => {
     setShowCategoryModal(false);
-
     if (selectedUsers.length === 0) {
       alert("Please select at least one user to split the expense with.");
       return;

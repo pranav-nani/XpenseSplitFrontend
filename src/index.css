@@ -727,65 +727,6 @@ body {
   color: var(--clr-background);
 }
 
-.btn-secondary {
-  background: var(--clr-secondary);
-  color: var(--clr-background);
-}
-
-/* Modal Styles */
-.modal {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  animation: fadeIn 0.3s ease;
-}
-
-.modal-content {
-  background: var(--clr-background);
-  padding: 40px;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 500px;
-  position: relative;
-}
-
-.modal-header {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.modal-header h2 {
-  color: var(--clr-text);
-  margin-bottom: 10px;
-}
-
-.close-btn {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: var(--clr-text-light);
-}
-
-.split-info {
-  background: var(--clr-surface);
-  padding: 15px;
-  border-radius: 10px;
-  margin-top: 20px;
-  text-align: center;
-  color: var(--clr-primary);
-}
-
 /* Keyframe Animations */
 @keyframes pulse {
   0%,

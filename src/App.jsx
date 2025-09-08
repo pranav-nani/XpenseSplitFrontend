@@ -3,6 +3,7 @@ import MainLayout from "./layouts/MainLayout";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import GroupDetails from "./pages/GroupDetails";
+import IndividualExpense from "./pages/IndividualExpenses"
 import AddExpense from "./pages/AddExpense";
 import RegisterComponent from "./pages/RegisterComponent";
 import PrivateRoute from "./components/PrivateRoute";
@@ -24,6 +25,7 @@ function App() {
           }>
           <Route index element={<Dashboard />} />
           <Route path="group" element={<GroupDetails />} />
+          <Route path="individual-expenses" element={<IndividualExpense/>}/>
           <Route path="add-expense" element={<AddExpense />} />
         </Route>
       </Routes>
