@@ -31,7 +31,7 @@ const Login = () => {
 
       toast.success(`Welcome back, ${response.data.firstname}!`);
       // CORRECTED: Store the entire user data object as a JSON string
-      localStorage.setItem("user", JSON.stringify(response.data)); 
+      localStorage.setItem("user", JSON.stringify(response.data));
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
@@ -56,7 +56,7 @@ const Login = () => {
         </div>
 
         <div className="form-group">
-          <label className="form-label">Username / Email</label>
+          <label className="form-label">Username</label>
           <input
             type="text"
             name="username"
@@ -90,8 +90,7 @@ const Login = () => {
                 background: "none",
                 border: "none",
                 cursor: "pointer",
-              }}
-            >
+              }}>
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>

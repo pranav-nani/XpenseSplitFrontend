@@ -30,9 +30,16 @@ const IndividualExpenses = () => {
       const response = await fetch(
         `http://localhost:8080/api/expenses/${username}`
       );
-      if (!response.ok) {
-        throw new Error("Failed to fetch expenses");
+
+      if (response.status === 404) {
+        setExpenses([]); // no expenses found
+        return;
       }
+
+      if (!response.ok) {
+        throw new Error("No expenses are added add Expenses");
+      }
+
       const data = await response.json();
       setExpenses(data);
     } catch (err) {

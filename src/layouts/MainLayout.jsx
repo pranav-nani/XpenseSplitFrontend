@@ -6,7 +6,7 @@ const MainLayout = () => {
     <div className="container">
       <Header />
       <main>
-        <Outlet /> {/* Child routes will be rendered here */}
+        <Outlet />
       </main>
     </div>
   );

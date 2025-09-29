@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "react-toastify";
+import logo from "../assets/logo.png";
 
 const RegisterComponent = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const RegisterComponent = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    upiId: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -43,6 +45,10 @@ const RegisterComponent = () => {
 
     if (!formData.lastName.trim()) {
       newErrors.lastName = "Last name is required";
+    }
+
+    if (!formData.upiId.trim()) {
+      newErrors.upiId = "Upi Id is required";
     }
 
     if (!formData.email.trim()) {
@@ -83,6 +89,7 @@ const RegisterComponent = () => {
           username: username,
           email: formData.email,
           password: formData.password,
+          upId: formData.upiId,
         }
       );
 
@@ -111,7 +118,10 @@ const RegisterComponent = () => {
 
       <div className="register-card">
         <div className="card-header">
-          <div className="card-title">XpenseSplit</div>
+          <div className="logo-container">
+            <h1>XpenseSplit</h1>
+            <img src={logo} alt="Application Logo" className="logo" />
+          </div>
           <div className="card-subtitle">Create your account</div>
           <div className="card-description">
             Join thousands of users managing expenses together
@@ -165,7 +175,18 @@ const RegisterComponent = () => {
             <span className="error-message">{errors.email}</span>
           )}
         </div>
-
+        <div className="form-group">
+          <label className="form-label">Upi Id</label>
+          <input
+            type="text"
+            name="upiId"
+            value={formData.upiId}
+            onChange={handleInputChange}
+            className={`form-input ${errors.upId ? "error" : ""}`}
+            placeholder="john934943@ybl"
+          />
+          {errors.upiId && <span className="error-message">{errors.upId}</span>}
+        </div>
         {/* Password Field */}
         <div className="form-group">
           <label className="form-label">Password</label>

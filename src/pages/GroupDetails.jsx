@@ -5,10 +5,10 @@ import { fetchGroups, createGroup } from "../api/groups";
 import { Plus } from "lucide-react";
 import { toast } from "react-toastify";
 import AddGroupExpenseModal from "../layouts/AddGroupExpenseModal";
+import SettleUpModal from "../layouts/SettleUpModal";
 
 const GroupDetails = () => {
   // --- STATE MANAGEMENT ---
-  // All state hooks are declared at the top level of the component.
   const [groups, setGroups] = useState([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(null);
@@ -17,19 +17,18 @@ const GroupDetails = () => {
   const [selectedFriends, setSelectedFriends] = useState([]);
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState(false);
-
-  // State for controlling the "Add Expense" modal visibility
+  const [isSettleUpModalOpen, setIsSettleUpModalOpen] = useState(false);
+  const [allUsers, setAllUsers] = useState([]);
+  const [memberDetails, setMemberDetails] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // --- USER DATA ---
   const storedUser = localStorage.getItem("user");
   let username = null;
-  let fullname = null;
   if (storedUser) {
     try {
       const userObject = JSON.parse(storedUser);
       if (userObject && typeof userObject.username === "string") {
-        fullname = userObject.username;
         username = userObject.username.split("_")[0];
       }
     } catch (error) {
@@ -51,9 +50,14 @@ const GroupDetails = () => {
         const groupsRes = await fetchGroups(username);
         setGroups(groupsRes.data);
 
-        const usersRes = await axios.get("http://localhost:8080/api/users/all");
+        const usersRes = await axios.get(
+          "http://localhost:8080/api/users/upi/all"
+        );
+        setAllUsers(usersRes.data); // Store the full user objects (DTOs)
+
+        // CORRECTED: Access the .username property before splitting
         const filteredFriends = usersRes.data
-          .map((user) => user.split("_")[0])
+          .map((user) => user.username.split("_")[0]) // get the clean name
           .filter((cleanUser) => cleanUser !== username);
         setAvailableFriends(filteredFriends);
       } catch (err) {
@@ -66,12 +70,10 @@ const GroupDetails = () => {
     };
 
     fetchAllData();
-  }, [fullname, username]);
-  // -- Balance Calculation --
-  // In GroupDetails.js, right after the username is defined.
+  }, [username]);
 
+  // -- Balance Calculation --
   const balanceSummary = React.useMemo(() => {
-    // If we don't have the necessary data, return a default zero-state object.
     if (!groups || groups.length === 0 || !username) {
       return {
         totalOwedToYou: 0,
@@ -80,36 +82,34 @@ const GroupDetails = () => {
         groupBalances: [],
       };
     }
-
     let totalOwedToYou = 0;
     let totalYouOwe = 0;
-
-    // Calculate the balance for each individual group.
     const groupBalances = groups.map((group) => {
       let currentUserBalanceInGroup = 0;
-
       group.expenses.forEach((expense) => {
         const myShare = expense.splitWith[username] || 0;
         if (expense.paidBy === username) {
-          totalOwedToYou += expense.amount - myShare;
           currentUserBalanceInGroup += expense.amount - myShare;
         } else {
-          totalYouOwe += myShare;
           currentUserBalanceInGroup -= myShare;
         }
       });
+      // Sum up totals outside the group loop for accuracy
+      if (currentUserBalanceInGroup > 0)
+        totalOwedToYou += currentUserBalanceInGroup;
+      if (currentUserBalanceInGroup < 0)
+        totalYouOwe += Math.abs(currentUserBalanceInGroup);
 
       return {
-        id: group.id || group._id, // Ensure we have a unique key
+        id: group.id || group._id,
         groupName: group.groupName,
         balance: currentUserBalanceInGroup,
       };
     });
-
     const netBalance = totalOwedToYou - totalYouOwe;
-
     return { totalOwedToYou, totalYouOwe, netBalance, groupBalances };
-  }, [groups, username]); // Dependency array: recalculate only when groups or username change.
+  }, [groups, username]);
+
   // --- HANDLER FUNCTIONS ---
   const handleCreateGroup = async () => {
     if (groupName.trim() && selectedFriends.length > 0) {
@@ -172,38 +172,44 @@ const GroupDetails = () => {
     );
   };
 
-  const handleBackToGroups = () => {
-    setSelectedGroup(null);
-  };
-
   const handleGroupClick = (group) => {
     setSelectedGroup(group);
+
+    // CORRECTED: Access the .username property before splitting
+    const details = allUsers.filter((user) =>
+      group.members.includes(user.username.split("_")[0])
+    );
+    setMemberDetails(details);
+  };
+
+  const handleBackToGroups = () => {
+    setSelectedGroup(null);
+    setMemberDetails([]);
+  };
+
+  const handleSettlement = () => {
+    if (selectedGroup) {
+      refreshGroupData(selectedGroup.id);
+    }
+    setIsSettleUpModalOpen(false);
   };
 
   const memberBalances = React.useMemo(() => {
-    if (!selectedGroup?.expenses) {
-      return {};
-    }
-
+    if (!selectedGroup?.expenses) return {};
     const balances = {};
     selectedGroup.members.forEach((member) => {
       balances[member] = 0;
     });
-
     selectedGroup.expenses.forEach((expense) => {
-      const payer = expense.paidBy;
-      const totalAmount = expense.amount;
-      const shares = expense.splitWith;
-      if (balances[payer] !== undefined) {
-        balances[payer] += totalAmount;
+      if (balances[expense.paidBy] !== undefined) {
+        balances[expense.paidBy] += expense.amount;
       }
-      for (const member in shares) {
+      for (const member in expense.splitWith) {
         if (balances[member] !== undefined) {
-          balances[member] -= shares[member];
+          balances[member] -= expense.splitWith[member];
         }
       }
     });
-
     return balances;
   }, [selectedGroup]);
   // --- RENDER LOGIC ---
@@ -361,14 +367,30 @@ const GroupDetails = () => {
                     {selectedGroup.expenses?.map((expense) => (
                       <div key={expense.id} className="expense-item">
                         <div className="expense-details">
-                          <div className="expense-description">
+                          <div
+                            className={`expense-description ${
+                              expense.description
+                                .toLowerCase()
+                                .includes("settlement")
+                                ? "settlement-description"
+                                : ""
+                            }`}>
                             {expense.description}
                           </div>
                           <div className="expense-payer">
                             Paid by {expense.paidBy}
                           </div>
                         </div>
-                        <div className="expense-amount">₹{expense.amount}</div>
+                        <div
+                          className={`expense-amount ${
+                            expense.description
+                              .toLowerCase()
+                              .includes("settlement")
+                              ? "settlement-amount"
+                              : ""
+                          }`}>
+                          ₹{expense.amount}
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -410,7 +432,11 @@ const GroupDetails = () => {
                   onClick={() => setIsModalOpen(true)}>
                   Add Expense
                 </button>
-                <button className="btn btn-secondary">Settle Up</button>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setIsSettleUpModalOpen(true)}>
+                  Settle Up
+                </button>
               </div>
             </div>
           </div>
@@ -420,6 +446,15 @@ const GroupDetails = () => {
             group={selectedGroup}
             onClose={() => setIsModalOpen(false)}
             onExpenseAdded={handleExpenseAdded}
+          />
+        )}
+        {isSettleUpModalOpen && (
+          <SettleUpModal
+            group={selectedGroup}
+            loggedInUser={username}
+            memberDetails={memberDetails}
+            onClose={() => setIsSettleUpModalOpen(false)}
+            onSettled={handleSettlement}
           />
         )}
       </>

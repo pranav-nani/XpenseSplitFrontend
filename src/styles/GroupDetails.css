@@ -810,19 +810,27 @@
 
 .expense-description {
   font-weight: 500;
-  color: #333;
+  color: var(--clr-text-primary);
   margin-bottom: 4px;
-}
-
-.expense-payer {
-  color: #6c757d;
-  font-size: 14px;
 }
 
 .expense-amount {
   font-weight: 600;
-  color: #333;
   font-size: 16px;
+}
+
+.settlement-description {
+  color: #2e8b57;
+  font-weight: 700;
+}
+
+.settlement-amount {
+  color: #2e8b57;
+  font-weight: 700;
+}
+.expense-payer {
+  color: #6c757d;
+  font-size: 14px;
 }
 
 /* Group Summary Specific Styles */

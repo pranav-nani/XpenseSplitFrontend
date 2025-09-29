@@ -1,0 +1,103 @@
+.settle-up-modal .modal-body {
+  padding: 20px 25px;
+}
+
+.payments-list p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.payments-list ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.payment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.payment-action {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 5px; /* Add some space on smaller screens when it wraps */
+}
+
+.qr-code-container {
+  text-align: center;
+  display: none; /* Hide by default */
+}
+
+.qr-label {
+  font-size: 0.75rem;
+  margin-bottom: 4px;
+  color: #555;
+}
+
+.close-button{
+  padding: 4px 10px;
+  font-size: 0.9rem;
+  margin-top: 20px;
+  background-color: #989898;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+/* Show QR code on larger screens (desktops) */
+@media (min-width: 768px) {
+  .qr-code-container {
+    display: block;
+  }
+}
+.payment-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+}
+
+.payment-info .payer,
+.payment-info .payee {
+  font-weight: 600;
+}
+
+.payment-info .payer {
+  color: #d9534f; /* Red for payer */
+}
+
+.payment-info .payee {
+  color: #5cb85c; /* Green for payee */
+}
+
+.payment-info .arrow {
+  font-weight: bold;
+  color: #333;
+}
+
+.payment-info .amount {
+  font-weight: 700;
+  color: #000;
+  margin-left: 15px;
+}
+
+.payment-item .btn {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
+
+.no-payments-needed {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.no-payments-needed p {
+  font-size: 1.2rem;
+  color: #333;
+}
