@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/GroupDetails.css";
-import axios from "axios";
-import { fetchGroups, createGroup } from "../api/groups";
+import { fetchGroups, createGroup, fetchAllUsers,fetchGroupById } from "../api/groups";
 import { Plus } from "lucide-react";
 import { toast } from "react-toastify";
 import AddGroupExpenseModal from "../layouts/AddGroupExpenseModal";
@@ -50,14 +49,11 @@ const GroupDetails = () => {
         const groupsRes = await fetchGroups(username);
         setGroups(groupsRes.data);
 
-        const usersRes = await axios.get(
-          "http://localhost:8080/api/users/upi/all"
-        );
-        setAllUsers(usersRes.data); // Store the full user objects (DTOs)
+        const usersRes = await fetchAllUsers();
+        setAllUsers(usersRes.data);
 
-        // CORRECTED: Access the .username property before splitting
         const filteredFriends = usersRes.data
-          .map((user) => user.username.split("_")[0]) // get the clean name
+          .map((user) => user.split("_")[0])
           .filter((cleanUser) => cleanUser !== username);
         setAvailableFriends(filteredFriends);
       } catch (err) {
@@ -94,7 +90,6 @@ const GroupDetails = () => {
           currentUserBalanceInGroup -= myShare;
         }
       });
-      // Sum up totals outside the group loop for accuracy
       if (currentUserBalanceInGroup > 0)
         totalOwedToYou += currentUserBalanceInGroup;
       if (currentUserBalanceInGroup < 0)
@@ -135,9 +130,7 @@ const GroupDetails = () => {
 
   const refreshGroupData = async (groupId) => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/api/groups/${groupId}`
-      );
+      const response = await fetchGroupById(groupId);
       const updatedGroup = response.data;
       setSelectedGroup(updatedGroup);
       setGroups((prevGroups) =>
@@ -175,7 +168,6 @@ const GroupDetails = () => {
   const handleGroupClick = (group) => {
     setSelectedGroup(group);
 
-    // CORRECTED: Access the .username property before splitting
     const details = allUsers.filter((user) =>
       group.members.includes(user.username.split("_")[0])
     );
@@ -212,6 +204,7 @@ const GroupDetails = () => {
     });
     return balances;
   }, [selectedGroup]);
+
   // --- RENDER LOGIC ---
   if (loading) {
     return (
@@ -511,7 +504,6 @@ const GroupDetails = () => {
             {balanceSummary.groupBalances.length > 0 ? (
               balanceSummary.groupBalances.map((group) => {
                 const isPositive = group.balance > 0;
-                // We can skip rendering groups where the balance is zero
                 if (group.balance === 0) return null;
 
                 return (

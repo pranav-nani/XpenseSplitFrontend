@@ -1,18 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
 import "../styles/AddExpenseModal.css";
-
+import { addExpenseToGroup } from "../api/groups";
 const AddGroupExpenseModal = ({ group, onClose, onExpenseAdded }) => {
-  // --- Get the current logged-in user ---
   const storedUser = localStorage.getItem("user");
   const currentUser = storedUser
     ? JSON.parse(storedUser).username.split("_")[0]
     : null;
-
-  // --- State Management ---
-  // The initial state is now calculated here and set only once.
-  // This resolves the infinite loop.
   const initialSelectedMembers = group.members.filter(
     (member) => member !== currentUser
   );
@@ -23,7 +17,6 @@ const AddGroupExpenseModal = ({ group, onClose, onExpenseAdded }) => {
     initialSelectedMembers
   );
 
-  // Members available for splitting (used for the list)
   const availableMembers = group.members.filter(
     (member) => member !== currentUser
   );
@@ -49,38 +42,27 @@ const AddGroupExpenseModal = ({ group, onClose, onExpenseAdded }) => {
       return;
     }
 
-    // --- START OF FIX ---
-
-    // 1. Calculate the total number of people splitting the bill
     const totalParticipants = [currentUser, ...selectedMembers];
     const splitCount = totalParticipants.length;
 
-    // 2. Calculate the amount per person
     const splitAmount =
       splitCount > 0 ? (Number(amount) / splitCount).toFixed(2) : 0;
 
-    // 3. Build the 'splitWith' object (the Map)
     const splitWithObject = {};
     totalParticipants.forEach((member) => {
       splitWithObject[member] = parseFloat(splitAmount);
     });
 
-    // 4. Create the final expense object with the correct structure
     const expense = {
       id: `exp-${Date.now()}`,
       description,
       amount: Number(amount),
       paidBy: currentUser,
-      splitWith: splitWithObject, // Use the new object here
+      splitWith: splitWithObject,
     };
 
-    // --- END OF FIX ---
-
     try {
-      await axios.post(
-        `http://localhost:8080/api/groups/${group.id}/addExpense`,
-        expense
-      );
+      await addExpenseToGroup(group.id, expense);
 
       toast.success("Expense added successfully!");
       onExpenseAdded();

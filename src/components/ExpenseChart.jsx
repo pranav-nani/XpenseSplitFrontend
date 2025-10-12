@@ -1,18 +1,18 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { useState, useEffect } from "react";
+import { fetchExpensesByUsername } from "../api/groups";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const generateColors = (count) => {
   const colors = [];
   for (let i = 0; i < count; i++) {
-    const hue = Math.floor((360 / count) * i); // Spread evenly across the color wheel
-    colors.push(`hsl(${hue}, 70%, 60%)`); // Adjust saturation & lightness for balance
+    const hue = Math.floor((360 / count) * i);
+    colors.push(`hsl(${hue}, 70%, 60%)`);
   }
   return colors;
 };
-
 const ExpenseChart = () => {
   const [data, setData] = useState({
     labels: [],
@@ -21,34 +21,30 @@ const ExpenseChart = () => {
 
   useEffect(() => {
     const fetchExpenses = async () => {
+      // Logic for getting username from localStorage...
       const storedUser = localStorage.getItem("user");
       let username = null;
-
       if (storedUser) {
         try {
-          // Parse the JSON string from localStorage
           const userObject = JSON.parse(storedUser);
-
-          // Check if the username property exists and is a string
           if (userObject && typeof userObject.username === "string") {
-            username = userObject.username;
-
-            // Apply your split logic to the extracted username
-            // Example: if the username is "nani_reddy", this will get "nani"
-            username = username.split("_")[0];
+            username = userObject.username.split("_")[0];
           }
         } catch (error) {
-          // Fallback for cases where the stored value is not valid JSON
           console.error("Failed to parse user data from localStorage:", error);
-          // In this case, you might want to handle it differently or set username to null
-          username = null;
         }
       }
+
       try {
-        const response = await fetch(
-          `http://localhost:8080/api/expenses/${username}`
-        );
-        const expenses = await response.json();
+        if (!username) return; // Don't fetch if no user
+
+        const expenses = await fetchExpensesByUsername(username);
+
+        if (!Array.isArray(expenses)) {
+          console.warn("Received non-array response, defaulting to empty.");
+          setData({ labels: [], datasets: [] });
+          return;
+        }
 
         const categoryTotals = expenses.reduce((acc, expense) => {
           acc[expense.category] = (acc[expense.category] || 0) + expense.amount;
@@ -90,11 +86,32 @@ const ExpenseChart = () => {
     },
   };
 
+  // --- NEW CODE: Check if there is data to display ---
+  // This is true only if the datasets array exists and its first element has data.
+  const hasData = data.datasets.length > 0 && data.datasets[0].data.length > 0;
+
   return (
     <div className="chart-container">
       <h3>Expenses by Category</h3>
       <div className="chart-wrapper">
-        <Doughnut data={data} options={options} />
+        {/* --- NEW CODE: Conditional rendering --- */}
+        {hasData ? (
+          <Doughnut data={data} options={options} />
+        ) : (
+          <div
+            className="no-data-message"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              height: "100%",
+              color: "#888",
+              fontSize: "1rem",
+              textAlign: "center",
+              padding: "20px",
+            }}>
+            <p>Add expenses to show and categorize them here</p>
+          </div>
+        )}
       </div>
     </div>
   );

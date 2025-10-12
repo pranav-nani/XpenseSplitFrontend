@@ -26,12 +26,12 @@
   display: flex;
   align-items: center;
   gap: 15px;
-  margin-top: 5px; /* Add some space on smaller screens when it wraps */
+  margin-top: 5px; 
 }
 
 .qr-code-container {
   text-align: center;
-  display: none; /* Hide by default */
+  display: none; 
 }
 
 .qr-label {
@@ -69,11 +69,11 @@
 }
 
 .payment-info .payer {
-  color: #d9534f; /* Red for payer */
+  color: #d9534f; 
 }
 
 .payment-info .payee {
-  color: #5cb85c; /* Green for payee */
+  color: #5cb85c;
 }
 
 .payment-info .arrow {

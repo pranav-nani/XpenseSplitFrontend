@@ -15,7 +15,6 @@ const SettleUpModal = ({
   const [paymentsOwedByUser, setPaymentsOwedByUser] = useState([]);
   const [paymentsOwedToUser, setPaymentsOwedToUser] = useState([]);
 
-  // This balance calculation is correct.
   const memberBalances = useMemo(() => {
     if (!group?.expenses) return {};
     const balances = {};
@@ -53,7 +52,6 @@ const SettleUpModal = ({
       const amount = Math.min(debtor.amount, creditor.amount);
 
       if (amount > 0.01) {
-        // Avoid tiny floating point payments
         allSuggestedPayments.push({
           from: debtor.name,
           to: creditor.name,
@@ -79,12 +77,8 @@ const SettleUpModal = ({
   }, [memberBalances, loggedInUser]);
 
   const getUpiIdForMember = (name) => {
-    // `name` here is the clean name, e.g., "nani"
     if (!memberDetails) return null;
-
-    // It searches the array of full objects...
     const user = memberDetails.find(
-      // ...and splits the username from the object to find a match
       (m) => m.username.split("_")[0] === name
     );
 
@@ -95,28 +89,23 @@ const SettleUpModal = ({
     setIsLoading(true);
 
     try {
-      // 1. Simulate a payment processing delay to feel like a real transaction
       console.log("Simulating a dummy payment process...");
-      await new Promise((resolve) => setTimeout(resolve, 1500)); // 1.5-second delay
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      // 2. Prepare the data for the backend API call
       const settlementData = {
         payer: payment.from,
         payee: payment.to,
         amount: payment.amount,
       };
 
-      // 3. Call your backend to update the group's expenses (the important part)
       await settleUp(group.id, settlementData);
 
-      // 4. Show a success message and trigger the UI refresh
       toast.success(`Payment to ${payment.to} recorded successfully!`);
       onSettled();
     } catch (error) {
       console.error("Failed to record settlement:", error);
       toast.error("Failed to record settlement. Please try again.");
     } finally {
-      // 5. Ensure the loading indicator is turned off
       setIsLoading(false);
     }
   };
@@ -142,7 +131,6 @@ const SettleUpModal = ({
             </div>
           ) : (
             <>
-              {/* Section for payments the user needs to make */}
               {paymentsOwedByUser.length > 0 && (
                 <div className="payments-section">
                   <h4>You Owe</h4>
@@ -189,7 +177,6 @@ const SettleUpModal = ({
                 </div>
               )}
 
-              {/* ADDED: Section for payments owed to the user */}
               {paymentsOwedToUser.length > 0 && (
                 <div className="payments-section">
                   <h4>You Are Owed</h4>

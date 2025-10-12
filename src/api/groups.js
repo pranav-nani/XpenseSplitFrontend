@@ -1,14 +1,52 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/groups";
+const API_URL = "http://localhost:8080/api";
 
+// Groups APIs
 export const fetchGroups = (username) =>
-    axios.get(`${API_URL}/user/${username}`);
+    axios.get(`${API_URL}/groups/user/${username}`);
 
 export const createGroup = (groupData) =>
-    axios.post(API_URL + "/create", groupData);
+    axios.post(`${API_URL}/groups/create`, groupData);
 
-export const settleUp = (groupId, settlementData) => {
-    // settlementData should be an object like { payer, payee, amount }
-    return axios.post(`${API_URL}/${groupId}/settle`, settlementData);
-};
+export const settleUp = (groupId, settlementData) =>
+    axios.post(`${API_URL}/groups/${groupId}/settle`, settlementData);
+
+export const fetchGroupById = (groupId) =>
+    axios.get(`${API_URL}/groups/${groupId}`);
+
+// Expenses APIs
+export const categorizeExpense = (description) =>
+    axios.post(`${API_URL}/expenses/categorize`, { description });
+
+export const addExpense = (expense) =>
+    axios.post(`${API_URL}/expenses/addExpense`, expense);
+
+export const addExpenseToGroup = (groupId, expense) =>
+    axios.post(`${API_URL}/groups/${groupId}/addExpense`, expense);
+
+export const fetchBalance = (username) =>
+    axios.get(`${API_URL}/expenses/balance/${username}`);
+
+export const fetchExpensesByUsername = async (username) => {
+    const response = await axios.get(`${API_URL}/expenses/${username}`);
+    return response.data
+}
+
+// Users APIs
+export const fetchAllUsers = () =>
+    axios.get(`${API_URL}/users/all`);
+
+export const loginUser = (username, password) =>
+    axios.post(`${API_URL}/users/login`, { username, password });
+
+export const registerUser = (userData) =>
+    axios.post(`${API_URL}/users/register`, userData);
+
+// which are not using api from here
+//addexpense - line 54, 91 (done)
+//dashboard - line 30 (done)
+// gr details - line 54, 137 (done)
+//individual expenses - line 31
+//login - line 25
+//register - line 85

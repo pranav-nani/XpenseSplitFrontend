@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "react-toastify";
 import logo from "../assets/logo.png";
+import { registerUser } from "../api/groups";
 
 const RegisterComponent = () => {
   const navigate = useNavigate();
@@ -81,17 +81,15 @@ const RegisterComponent = () => {
     try {
       const username =
         `${formData.firstName}_${formData.lastName}`.toLowerCase();
-      const response = await axios.post(
-        "http://localhost:8080/api/users/register",
-        {
-          firstname: formData.firstName,
-          lastname: formData.lastName,
-          username: username,
-          email: formData.email,
-          password: formData.password,
-          upId: formData.upiId,
-        }
-      );
+
+      const response = await registerUser({
+        firstname: formData.firstName,
+        lastname: formData.lastName,
+        username: username,
+        email: formData.email,
+        password: formData.password,
+        upId: formData.upiId,
+      });
 
       toast.success(
         `Registration successful! Welcome ${response.data.username}`

@@ -1,4 +1,3 @@
-import React from "react";
 import "../styles/CategoryModal.css"; 
 
 const CategoryModal = ({ category, onConfirm, onCancel, onChange }) => {

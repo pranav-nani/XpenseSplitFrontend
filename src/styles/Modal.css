@@ -25,15 +25,13 @@
 
 .modal-content {
   background: white;
-  padding: 2.5rem; /* Increased padding for more breathing room */
-  border-radius: 12px; /* Softer corners */
-  max-width: 800px;   /* --- Increased width for a wider layout --- */
-  width: 90%;         /* Ensures responsiveness on smaller screens */
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); /* A more modern shadow */
+  padding: 2.5rem;
+  border-radius: 12px;
+  max-width: 800px;
+  width: 90%;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
   position: relative;
-  box-sizing: border-box; /* Prevents padding from breaking layout */
-  
-  /* Applying the new animation for a smooth entrance */
+  box-sizing: border-box;
   animation: fadeInScaleUp 0.3s ease-out forwards;
 }
 
@@ -46,21 +44,20 @@
   font-size: 2.5rem;
   line-height: 1;
   cursor: pointer;
-  color: #a0a0a0; /* Softer color for the 'X' */
+  color: #a0a0a0;
   transition: color 0.2s ease;
 }
 
 .modal-content .close-btn:hover {
-    color: #333; /* Darkens on hover for better feedback */
+  color: #333;
 }
 
 .split-info {
   font-size: 0.9rem;
   color: #555;
   margin-top: -1rem;
-  margin-bottom: 1.5rem; /* More space below */
+  margin-bottom: 1.5rem;
   padding: 0.75rem 1rem;
   background-color: #f0f2f5;
   border-radius: 8px;
 }
-

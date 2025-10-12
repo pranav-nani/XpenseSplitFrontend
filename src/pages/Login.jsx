@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { Eye, EyeOff } from "lucide-react";
-
+import { loginUser } from "../api/groups";
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -21,17 +20,11 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/users/login",
-        {
-          username: formData.username,
-          password: formData.password,
-        }
-      );
+      const response = await loginUser(formData.username, formData.password);
 
       toast.success(`Welcome back, ${response.data.firstname}!`);
-      // CORRECTED: Store the entire user data object as a JSON string
       localStorage.setItem("user", JSON.stringify(response.data));
+
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);

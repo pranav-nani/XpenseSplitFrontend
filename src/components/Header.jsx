@@ -5,11 +5,8 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Remove stored user/auth data
     localStorage.removeItem("user");
     localStorage.removeItem("authToken");
-
-    // Redirect to login
     navigate("/login");
   };
 

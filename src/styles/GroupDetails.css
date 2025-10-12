@@ -1,4 +1,3 @@
-/* Base styles */
 .page {
   min-height: 100vh;
   background: #f8f9fa;
@@ -877,17 +876,17 @@
 
 /* Green text for members who are owed money */
 .member-status.positive {
-  color: #198754; /* A nice, clear green */
+  color: #198754; 
 }
 
 /* Red text for members who owe money */
 .member-status.negative {
-  color: #dc3545; /* A standard, clear red */
+  color: #dc3545; 
 }
 
 /* Gray text for members who are settled up */
 .member-status.neutral {
-  color: #6c757d; /* A neutral gray */
+  color: #6c757d; 
   font-weight: 400;
 }
 

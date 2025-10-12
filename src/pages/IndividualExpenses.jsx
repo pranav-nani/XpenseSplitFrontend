@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../styles/IndividualExpenses.css";
+import { fetchExpensesByUsername } from "../api/groups";
+
 const IndividualExpenses = () => {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Logic to get username from localStorage
   const storedUser = localStorage.getItem("user");
   let username = null;
-
   if (storedUser) {
     try {
       const userObject = JSON.parse(storedUser);
       if (userObject && typeof userObject.username === "string") {
-        username = userObject.username;
-        username = username.split("_")[0];
+        username = userObject.username.split("_")[0];
       }
     } catch (error) {
       console.error("Failed to parse user data from localStorage:", error);
@@ -21,33 +23,38 @@ const IndividualExpenses = () => {
   }
 
   useEffect(() => {
-    fetchExpenses();
-  }, [username]);
-
-  const fetchExpenses = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(
-        `http://localhost:8080/api/expenses/${username}`
-      );
-
-      if (response.status === 404) {
-        setExpenses([]); // no expenses found
+    // The data fetching logic is now defined inside useEffect
+    const loadExpenses = async () => {
+      // Guard clause: Don't fetch if there is no username
+      if (!username) {
+        setLoading(false);
+        setExpenses([]);
         return;
       }
 
-      if (!response.ok) {
-        throw new Error("No expenses are added add Expenses");
-      }
+      try {
+        setLoading(true);
+        setError(null); // Clear previous errors on a new fetch
+        const data = await fetchExpensesByUsername(username);
+        console.log("Received data from API:", data);
 
-      const data = await response.json();
-      setExpenses(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+        setExpenses(data);
+      } catch (err) {
+        console.error("Error fetching expenses:", err);
+
+        // Robust error handling: Treat 404 (Not Found) as an empty list, not an error
+        if (err.response && err.response.status === 404) {
+          setExpenses([]);
+        } else {
+          setError(err.response?.data?.message || err.message);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadExpenses();
+  }, [username]); // Effect re-runs only when username changes
 
   const getCategoryIcon = (category) => {
     const icons = {
@@ -98,6 +105,14 @@ const IndividualExpenses = () => {
     );
   }
 
+  // Calculate stats once to be more efficient
+  const totalAmount = expenses.reduce(
+    (sum, expense) => sum + expense.amount,
+    0
+  );
+  const averageAmount =
+    expenses.length > 0 ? (totalAmount / expenses.length).toFixed(2) : 0;
+
   return (
     <div className="Ind-container">
       <div className="header">
@@ -112,28 +127,20 @@ const IndividualExpenses = () => {
             <div className="stat-label">Total Expenses</div>
           </div>
           <div className="stat-card">
-            <div className="stat-value">
-              ₹{expenses.reduce((sum, expense) => sum + expense.amount, 0)}
-            </div>
+            <div className="stat-value">₹{totalAmount}</div>
             <div className="stat-label">Total Amount</div>
           </div>
           <div className="stat-card">
-            <div className="stat-value">
-              ₹
-              {(
-                expenses.reduce((sum, expense) => sum + expense.amount, 0) /
-                expenses.length
-              ).toFixed(2)}
-            </div>
+            <div className="stat-value">₹{averageAmount}</div>
             <div className="stat-label">Average Expense</div>
           </div>
         </div>
       )}
 
       {expenses.length === 0 ? (
+        // This is your requested change
         <div className="no-expenses">
-          <h3>No expenses found</h3>
-          <p>You haven't added any expenses yet.</p>
+          <h3>Please add expenses to display here</h3>
         </div>
       ) : (
         <div className="expenses-grid">

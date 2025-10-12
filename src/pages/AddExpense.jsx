@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import "../styles/AddExpense.css";
 import CategoryModal from "../components/CategoryModal";
 import { toast } from "react-toastify";
+import { categorizeExpense, addExpense, fetchAllUsers } from "../api/groups";
 const AddExpense = () => {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
@@ -27,10 +27,9 @@ const AddExpense = () => {
     }
   }
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/users/all")
+    fetchAllUsers()
       .then((res) => setAllUsers(res.data))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("Error fetching users:", err));
   }, []);
 
   const handleUserSelect = (user) => {
@@ -51,12 +50,8 @@ const AddExpense = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:8080/api/expenses/categorize", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ description }),
-      });
-      const categorySuggestion = await res.text();
+      const res = await categorizeExpense(description);
+      const categorySuggestion = res.data; // axios gives data in res.data
       setSuggestedCategory(categorySuggestion);
       setShowCategoryModal(true);
     } catch (err) {
@@ -89,17 +84,14 @@ const AddExpense = () => {
     };
 
     try {
-      await axios.post(
-        "http://localhost:8080/api/expenses/addExpense",
-        expense
-      );
+      await addExpense(expense);
       toast.success("Expense added successfully!");
       window.dispatchEvent(new Event("expenseAdded"));
       setDescription("");
       setAmount("");
       setSelectedUsers([]);
     } catch (err) {
-      console.error(err);
+      console.error("Error adding expense:", err);
       alert("Failed to add expense.");
     }
   };

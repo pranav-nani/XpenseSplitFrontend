@@ -479,12 +479,12 @@ body {
 .header {
   background: var(
     --clr-surface
-  ); /* Assuming this is a white or light color variable */
-  color: var(--clr-text-primary); /* Change to a dark color for the text */
+  );
+  color: var(--clr-text-primary);
   padding: 30px;
   text-align: center;
   border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(142, 76, 255, 0.2); /* Adds a soft, subtle shadow */
+  box-shadow: 0 4px 15px rgba(142, 76, 255, 0.2);
 }
 
 .welcome-text {
@@ -671,21 +671,11 @@ body {
   flex: 1;
 }
 
-/* .expense-description {
-  font-weight: 500;
-  margin-bottom: 5px;
-  color: var(--clr-text);
-} */
 
 .expense-payer {
   font-size: 0.9em;
   color: var(--clr-text-light);
 }
-
-/* .expense-amount {
-  font-weight: bold;
-  color: var(--clr-text);
-} */
 
 .group-summary {
   background: var(--clr-surface);

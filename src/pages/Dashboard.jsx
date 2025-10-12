@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import BalanceCard from "../components/BalanceCard";
 import ExpenseChart from "../components/ExpenseChart";
+import { fetchBalance } from "../api/groups";
 
 const Dashboard = () => {
   const [youOwe, setYouOwe] = useState(0);
@@ -26,10 +27,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!username) return;
-
-    fetch(`http://localhost:8080/api/expenses/balance/${username}`)
-      .then((res) => res.json())
-      .then((data) => {
+    fetchBalance(username)
+      .then((res) => {
+        const data = res.data;
         setTotalBalance(data.totalBalance);
         setYouOwe(data.youOwe);
         setYouAreOwed(data.youAreOwed);
