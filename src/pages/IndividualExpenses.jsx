@@ -7,7 +7,6 @@ const IndividualExpenses = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Logic to get username from localStorage
   const storedUser = localStorage.getItem("user");
   let username = null;
   if (storedUser) {
@@ -23,9 +22,7 @@ const IndividualExpenses = () => {
   }
 
   useEffect(() => {
-    // The data fetching logic is now defined inside useEffect
     const loadExpenses = async () => {
-      // Guard clause: Don't fetch if there is no username
       if (!username) {
         setLoading(false);
         setExpenses([]);
@@ -34,15 +31,13 @@ const IndividualExpenses = () => {
 
       try {
         setLoading(true);
-        setError(null); // Clear previous errors on a new fetch
+        setError(null); 
         const data = await fetchExpensesByUsername(username);
-        console.log("Received data from API:", data);
 
         setExpenses(data);
       } catch (err) {
         console.error("Error fetching expenses:", err);
 
-        // Robust error handling: Treat 404 (Not Found) as an empty list, not an error
         if (err.response && err.response.status === 404) {
           setExpenses([]);
         } else {
@@ -54,7 +49,7 @@ const IndividualExpenses = () => {
     };
 
     loadExpenses();
-  }, [username]); // Effect re-runs only when username changes
+  }, [username]); 
 
   const getCategoryIcon = (category) => {
     const icons = {
@@ -105,7 +100,6 @@ const IndividualExpenses = () => {
     );
   }
 
-  // Calculate stats once to be more efficient
   const totalAmount = expenses.reduce(
     (sum, expense) => sum + expense.amount,
     0
@@ -138,7 +132,6 @@ const IndividualExpenses = () => {
       )}
 
       {expenses.length === 0 ? (
-        // This is your requested change
         <div className="no-expenses">
           <h3>Please add expenses to display here</h3>
         </div>

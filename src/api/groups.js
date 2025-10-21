@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api";
+const API_URL = "https://xpensesplit.onrender.com/api";
 
 // Groups APIs
 export const fetchGroups = (username) =>
@@ -42,11 +42,3 @@ export const loginUser = (username, password) =>
 
 export const registerUser = (userData) =>
     axios.post(`${API_URL}/users/register`, userData);
-
-// which are not using api from here
-//addexpense - line 54, 91 (done)
-//dashboard - line 30 (done)
-// gr details - line 54, 137 (done)
-//individual expenses - line 31
-//login - line 25
-//register - line 85
