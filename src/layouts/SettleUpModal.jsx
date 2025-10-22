@@ -7,7 +7,7 @@ import "../styles/SettleUpModal.css";
 const SettleUpModal = ({
   group,
   loggedInUser,
-  memberDetails,
+  allUsersUpiData,
   onClose,
   onSettled,
 }) => {
@@ -77,11 +77,10 @@ const SettleUpModal = ({
   }, [memberBalances, loggedInUser]);
 
   const getUpiIdForMember = (name) => {
-    if (!memberDetails) return null;
-    const user = memberDetails.find(
-      (m) => m.username.split("_")[0] === name
+    if (!allUsersUpiData) return null;
+    const user = allUsersUpiData.find(
+      (m) => m.username?.split("_")[0] === name
     );
-
     return user ? user.upId : null;
   };
 
@@ -114,7 +113,9 @@ const SettleUpModal = ({
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content settle-up-modal" style={{maxWidth:"800px"}}>
+      <div
+        className="modal-content settle-up-modal"
+        style={{ maxWidth: "800px" }}>
         <div className="modal-header">
           <h2>Settle Up</h2>
           <button
@@ -136,6 +137,7 @@ const SettleUpModal = ({
                   <h4>You Owe</h4>
                   <ul className="payments-list">
                     {paymentsOwedByUser.map((payment, index) => {
+                      console.log("Looking for UPI ID for:", payment.to);
                       const payeeUpiId = getUpiIdForMember(payment.to);
                       const note = encodeURIComponent(
                         `Payment for ${group.groupName}`

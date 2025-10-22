@@ -1,26 +1,28 @@
 .add-expense-page {
   background: white;
-  border-radius: 20px;
+  border-radius: clamp(12px, 3vw, 20px);
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 15px 35px rgba(0, 0, 0, 0.1),
     0 5px 15px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  min-height: 600px;
+  min-height: clamp(400px, 80vh, 600px);
   position: relative;
   animation: fadeIn 0.3s ease-in;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  margin-top: 80px;
+  margin-top: clamp(20px, 10vh, 80px);
+  width: 100%;
+  max-width: 100%;
 }
 
 .add-expense-page-active {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: clamp(12px, 3vw, 20px);
 }
 
 .add-expense-container {
-  padding: 30px;
+  padding: clamp(16px, 4vw, 30px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,23 +34,23 @@
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 15px 35px rgba(0, 0, 0, 0.1),
     0 5px 15px rgba(0, 0, 0, 0.08);
   border-radius: 0;
-  padding: 40px;
+  padding: clamp(20px, 5vw, 40px);
   width: 100%;
-  max-width: 500px;
+  max-width: min(500px, 100%);
   box-shadow: none;
   position: static;
 }
 
 .add-expense-modal-header {
   text-align: center;
-  margin-bottom: 30px;
-  padding-bottom: 20px;
+  margin-bottom: clamp(20px, 4vw, 30px);
+  padding-bottom: clamp(12px, 3vw, 20px);
   border-bottom: 2px solid #f0f0f0;
 }
 
 .add-expense-modal-header h2 {
   color: #333;
-  font-size: 28px;
+  font-size: clamp(20px, 5vw, 28px);
   font-weight: 600;
   margin: 0 0 8px 0;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -59,28 +61,28 @@
 
 .add-expense-modal-header-subtitle {
   color: #666;
-  font-size: 14px;
+  font-size: clamp(12px, 2.5vw, 14px);
 }
 
 .add-expense-form-group {
-  margin-bottom: 24px;
+  margin-bottom: clamp(16px, 3vw, 24px);
 }
 
 .add-expense-form-group label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: clamp(6px, 1.5vw, 8px);
   color: #333;
   font-weight: 500;
-  font-size: 14px;
+  font-size: clamp(13px, 2.5vw, 14px);
 }
 
 .add-expense-form-group input[type="text"],
 .add-expense-form-group input[type="number"] {
   width: 100%;
-  padding: 12px 16px;
+  padding: clamp(10px, 2vw, 12px) clamp(12px, 3vw, 16px);
   border: 2px solid #e1e5e9;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: clamp(6px, 1.5vw, 8px);
+  font-size: clamp(14px, 3vw, 16px);
   transition: all 0.3s ease;
   box-sizing: border-box;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -95,9 +97,9 @@
 
 .add-expense-user-selection-container {
   background: #f8f9fa;
-  border-radius: 12px;
-  padding: 20px;
-  margin-top: 8px;
+  border-radius: clamp(8px, 2vw, 12px);
+  padding: clamp(12px, 3vw, 20px);
+  margin-top: clamp(6px, 1.5vw, 8px);
   border: 1px solid #e9ecef;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
 }
@@ -106,21 +108,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
+  flex-wrap: wrap;
+  gap: clamp(8px, 2vw, 12px);
+  margin-bottom: clamp(12px, 2.5vw, 16px);
+  padding-bottom: clamp(8px, 2vw, 12px);
   border-bottom: 1px solid #e9ecef;
 }
 
 .add-expense-user-checkbox-container {
-  margin-bottom: 8px;
+  margin-bottom: clamp(6px, 1.5vw, 8px);
 }
 
 .add-expense-user-checkbox-label {
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 12px 16px;
-  border-radius: 8px;
+  padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 16px);
+  border-radius: clamp(6px, 1.5vw, 8px);
   transition: all 0.3s ease;
   position: relative;
   background: white;
@@ -162,11 +166,11 @@
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  width: 20px;
-  height: 20px;
+  width: clamp(18px, 4vw, 20px);
+  height: clamp(18px, 4vw, 20px);
   border: 2px solid #dee2e6;
   border-radius: 4px;
-  margin-right: 12px;
+  margin-right: clamp(8px, 2vw, 12px);
   position: relative;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -208,7 +212,7 @@
 }
 
 .add-expense-user-checkbox-label span {
-  font-size: 14px;
+  font-size: clamp(13px, 2.5vw, 14px);
   font-weight: 500;
   flex: 1;
 }
@@ -217,14 +221,15 @@
   background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
   color: white;
   border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 12px;
+  padding: clamp(6px, 1.5vw, 8px) clamp(12px, 3vw, 16px);
+  border-radius: clamp(4px, 1vw, 6px);
+  font-size: clamp(11px, 2vw, 12px);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
 .add-expense-select-all-btn:hover {
@@ -241,18 +246,19 @@
 }
 
 .add-expense-selection-count {
-  font-size: 13px;
+  font-size: clamp(12px, 2.5vw, 13px);
   color: #6c757d;
   font-weight: 600;
   background: rgba(108, 117, 125, 0.1);
-  padding: 4px 8px;
-  border-radius: 12px;
+  padding: clamp(3px, 1vw, 4px) clamp(6px, 1.5vw, 8px);
+  border-radius: clamp(8px, 2vw, 12px);
 }
 
 .add-expense-action-buttons {
-  margin-top: 30px;
+  margin-top: clamp(20px, 4vw, 30px);
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+  gap: clamp(8px, 2vw, 12px);
 }
 
 .add-expense-btn-full-width {
@@ -260,10 +266,10 @@
 }
 
 .add-expense-btn-1 {
-  padding: 14px 24px;
+  padding: clamp(12px, 2.5vw, 14px) clamp(16px, 4vw, 24px);
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: clamp(6px, 1.5vw, 8px);
+  font-size: clamp(14px, 3vw, 16px);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -293,9 +299,90 @@
 }
 
 .add-expense-user-selection-list {
-  max-height: 250px;
+  max-height: clamp(200px, 40vh, 250px);
   overflow-y: auto;
   border: 1px solid #ddd;
-  padding: 8px; 
-  border-radius: 4px; 
+  padding: clamp(6px, 1.5vw, 8px);
+  border-radius: clamp(3px, 1vw, 4px);
+}
+
+/* Tablet Styles (768px and below) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .add-expense-action-buttons {
+    flex-direction: row;
+  }
+}
+
+/* Desktop Styles (769px and above) */
+@media (min-width: 769px) {
+  .add-expense-action-buttons {
+    flex-direction: row;
+  }
+
+  .add-expense-page {
+    margin-top: 80px;
+  }
+}
+
+/* Small Mobile Optimization (480px and below) */
+@media (max-width: 480px) {
+  .add-expense-page {
+    border-radius: 12px;
+    margin-top: 135px;
+  }
+
+  .add-expense-modal-content {
+    padding: 20px;
+  }
+
+  .add-expense-user-checkbox-label:hover {
+    transform: none;
+  }
+
+  .add-expense-btn-primary:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* Extra Small Mobile (320px and below) */
+@media (max-width: 320px) {
+  .add-expense-modal-header h2 {
+    font-size: 18px;
+  }
+
+  .add-expense-modal-content {
+    padding: 16px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .add-expense-user-checkbox-label:hover,
+  .add-expense-select-all-btn:hover,
+  .add-expense-btn-primary:hover {
+    transform: none;
+  }
+
+  .add-expense-user-checkbox-label input[type="checkbox"]:hover {
+    box-shadow: none;
+  }
+}
+
+/* Landscape mobile orientation */
+@media (max-height: 500px) and (orientation: landscape) {
+  .add-expense-page {
+    min-height: auto;
+    margin-top: 20px;
+  }
+
+  .add-expense-user-selection-list {
+    max-height: 150px;
+  }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .add-expense-user-checkbox-label input[type="checkbox"]:checked::after {
+    border-width: 0 2.5px 2.5px 0;
+  }
 }

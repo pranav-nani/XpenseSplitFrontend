@@ -42,3 +42,5 @@ export const loginUser = (username, password) =>
 
 export const registerUser = (userData) =>
     axios.post(`${API_URL}/users/register`, userData);
+
+export const getAllUsersWithUpi = () => axios.get(`${API_URL}/users/upi/all`);

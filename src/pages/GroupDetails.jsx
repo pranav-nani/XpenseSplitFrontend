@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../styles/GroupDetails.css";
-import { fetchGroups, createGroup, fetchAllUsers,fetchGroupById } from "../api/groups";
+import {
+  fetchGroups,
+  createGroup,
+  fetchAllUsers,
+  fetchGroupById,
+  getAllUsersWithUpi,
+} from "../api/groups";
 import { Plus } from "lucide-react";
 import { toast } from "react-toastify";
 import AddGroupExpenseModal from "../layouts/AddGroupExpenseModal";
@@ -20,7 +26,7 @@ const GroupDetails = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [memberDetails, setMemberDetails] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [allUsersUpiData, setAllUsersUpiData] = useState([]);
   // --- USER DATA ---
   const storedUser = localStorage.getItem("user");
   let username = null;
@@ -56,6 +62,8 @@ const GroupDetails = () => {
           .map((user) => user.split("_")[0])
           .filter((cleanUser) => cleanUser !== username);
         setAvailableFriends(filteredFriends);
+        const usersApi = await getAllUsersWithUpi();
+        setAllUsersUpiData(usersApi.data);
       } catch (err) {
         console.error("Failed to fetch data:", err);
         setFetchError(true);
@@ -167,9 +175,8 @@ const GroupDetails = () => {
 
   const handleGroupClick = (group) => {
     setSelectedGroup(group);
-
     const details = allUsers.filter((user) =>
-      group.members.includes(user.username.split("_")[0])
+      group.members.includes(user?.split("_")[0])
     );
     setMemberDetails(details);
   };
@@ -446,6 +453,7 @@ const GroupDetails = () => {
             group={selectedGroup}
             loggedInUser={username}
             memberDetails={memberDetails}
+            allUsersUpiData={allUsersUpiData}
             onClose={() => setIsSettleUpModalOpen(false)}
             onSettled={handleSettlement}
           />
