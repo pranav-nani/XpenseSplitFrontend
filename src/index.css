@@ -81,6 +81,40 @@ body {
   }
 }
 
+/**** ==========Loading Screen Styles========== ****/
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    var(--clr-gradient-start),
+    var(--clr-gradient-end)
+  );
+  color: var(--clr-background);
+  z-index: 9999;
+  text-align: center;
+}
+
+.loading-spinner-login {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--clr-background);
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.loading-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--clr-background);
+  letter-spacing: 0.5px;
+}
+
 /* ========== HEADER STYLES ========== */
 .main-header {
   position: fixed;

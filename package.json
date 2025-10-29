@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^1.11.0",
     "chart.js": "^4.5.0",
+    "framer-motion": "^12.23.24",
     "lucide-react": "^0.540.0",
     "qrcode.react": "^4.2.0",
     "react": "^19.1.1",
