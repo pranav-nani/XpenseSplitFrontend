@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Eye, EyeOff } from "lucide-react";
@@ -13,7 +14,17 @@ const Login = () => {
     username: "",
     password: "",
   });
-
+  useEffect(() => {
+    const wakeUpServer = async () => {
+      try {
+        await axios.get("https://xpensesplit.onrender.com/api/ping", { timeout: 10000 });
+        console.log("✅ Backend awake!");
+      } catch (err) {
+        console.log("⚠️ Server still waking up...",err);
+      }
+    };
+    wakeUpServer();
+  }, []);
   const handleChange = (e) => {
     setFormData({
       ...formData,
